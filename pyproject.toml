@@ -2,6 +2,7 @@
 requires = [
     "wheel",
     "setuptools",
+    "packaging",
     "Cython>=0.29.13",
     "numpy==1.13.3; python_version=='3.6' and platform_system!='AIX'",
     "numpy==1.14.5; python_version=='3.7' and platform_system!='AIX'",

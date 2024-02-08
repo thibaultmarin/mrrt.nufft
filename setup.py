@@ -19,7 +19,7 @@ with open(ver_file) as f:
 # Give setuptools a hint to complain if it's too old a version
 # 24.2.0 added the python_requires option
 # Should match pyproject.toml
-SETUP_REQUIRES = ["setuptools >= 24.2.0"]
+SETUP_REQUIRES = ["setuptools >= 24.2.0", "packaging"]
 # This enables setuptools to install wheel on-the-fly
 SETUP_REQUIRES += ["wheel"] if "bdist_wheel" in sys.argv else []
 
@@ -68,10 +68,11 @@ extbuilder = make_np_ext_builder(extbuilder)
 # cython check
 try:
     import cython
+    import packaging.version
 
     # check that cython version is > 0.21
-    cython_version = cython.__version__
-    if float(cython_version.partition(".")[2][:2]) < 21:
+    cython_version = packaging.version.parse(cython.__version__)
+    if cython_version < packaging.version.parse('0.21'):
         raise ImportError
     build_cython = True
 except ImportError:
