@@ -172,11 +172,16 @@ def _get_gridding_funcs(
         ndim, order, cplx_str, real_type
     )
 
-    forward_kernel = cupy.core.RawKernel(
+    if hasattr(cupy, 'core'):
+        RawKernel = cupy.core.RawKernel
+    else:
+        RawKernel = cupy.RawKernel
+
+    forward_kernel = RawKernel(
         rendered_template_forward, name=forward_name, options=compile_options
     )
 
-    adjoint_kernel = cupy.core.RawKernel(
+    adjoint_kernel = RawKernel(
         rendered_template_adjoint, name=adjoint_name, options=compile_options
     )
 
